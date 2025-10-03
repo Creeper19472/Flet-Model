@@ -115,14 +115,19 @@ class Router:
                     self._view_cache[part] = model.create_view()
                 self._page.views.append(self._view_cache[part])
 
+        # trigger Model.did_mount()
+        self._routes[route_parts[-1]].did_mount()
+
         self._page.update()
 
     async def _handle_view_pop(self, e: ft.ViewPopEvent) -> None:
         if len(self._page.views) > 1:
-            self._page.views.pop()
             route_parts = self._page.route.split('/')
+            self._routes[route_parts[-1]].will_unmount()
+            self._page.views.pop()
             route_parts.pop()
             await self._page.push_route('/'.join(route_parts))
+            
         self._page.update()
 
     @classmethod

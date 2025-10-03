@@ -52,6 +52,16 @@ class Model:
         """Post-initialization hook. Override for logic after view creation."""
         pass
 
+    def did_mount(self) -> None:
+        """
+        Mimics the hook implemented by `View`. 
+        Triggered every time this model is brought to the foreground.
+        """
+        pass
+
+    def will_unmount(self) -> None:
+        pass
+
     def create_view(self) -> ft.View:
         """Create and return a Flet View instance based on model properties."""
         # Use cached controls
