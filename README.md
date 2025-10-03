@@ -2,7 +2,7 @@
 
 A Model-based router for Flet applications that simplifies the creation of multi-page applications with built-in state management and navigation.
 
-[![PyPI Downloads](https://static.pepy.tech/personalized-badge/flet-model?period=total&units=INTERNATIONAL_SYSTEM&left_color=GREY&right_color=BLUE&left_text=downloads)](https://pepy.tech/projects/flet-model)
+<!-- [![PyPI Downloads](https://static.pepy.tech/personalized-badge/flet-model?period=total&units=INTERNATIONAL_SYSTEM&left_color=GREY&right_color=BLUE&left_text=downloads)](https://pepy.tech/projects/flet-model) -->
 
 
 ## Installation
@@ -49,8 +49,8 @@ class HomeModel(Model):
         ft.ElevatedButton("Go to Profile", on_click="navigate_to_profile")
     ]
 
-    def navigate_to_profile(self, e):
-        self.page.go('/home/profile')
+    async def navigate_to_profile(self, e):
+        await self.page.push_route('/home/profile')
 
 
 @route('profile')
@@ -73,13 +73,13 @@ class ProfileModel(Model):
     ]
 
 
-def main(page: ft.Page):
+async def main(page: ft.Page):
     page.title = "Flet Model Demo"
     # Router is automatically initialized
-    page.go('/home')
+    await page.push_route('/home')
 
 
-ft.app(target=main)
+ft.run(main)
 ```
 
 ## Advanced Features
@@ -88,7 +88,7 @@ ft.app(target=main)
 
 ```python
 # Navigate with data
-self.page.go('/products#id=123&category=electronics')
+await self.page.push_route('/products#id=123&category=electronics')
 
 @route('products')
 class ProductModel(Model):
@@ -195,23 +195,6 @@ class OverlayModel(Model):
         self.page.close(e.control.parent)
 ```
 
-### 7. Fullscreen Dialogs
-
-```python
-@route('dialog')
-class DialogModel(Model):
-    fullscreen_dialog = True
-
-    controls = [
-        ft.Text("Dialog Content"),
-        ft.ElevatedButton("Close", on_click="close_dialog")
-    ]
-
-    def close_dialog(self, e):
-        self.page.views.pop()
-        self.page.go(self.page.views[-1].route)
-```
-
 ## Real-world Example
 
 Here's a complete example of a todo application using Flet Model:
@@ -278,12 +261,12 @@ class TodoModel(Model):
         self.update()
 
 
-def main(page: ft.Page):
+async def main(page: ft.Page):
     # No manual router initialization needed
-    page.go('todo')
+    await page.push_route('todo')
 
 
-ft.app(target=main)
+ft.run(main)
 ```
 
 ## Contributing

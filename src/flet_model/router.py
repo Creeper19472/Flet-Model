@@ -117,12 +117,12 @@ class Router:
 
         self._page.update()
 
-    def _handle_view_pop(self, e: ft.ViewPopEvent) -> None:
+    async def _handle_view_pop(self, e: ft.ViewPopEvent) -> None:
         if len(self._page.views) > 1:
             self._page.views.pop()
             route_parts = self._page.route.split('/')
             route_parts.pop()
-            self._page.go('/'.join(route_parts))
+            await self._page.push_route('/'.join(route_parts))
         self._page.update()
 
     @classmethod
@@ -177,7 +177,7 @@ class Router:
         return cls._instance
 
     @classmethod
-    def navigate(cls, route: str) -> None:
+    async def navigate(cls, route: str) -> None:
         """
         Navigate to a specific route, ensuring the router is initialized first.
 
@@ -185,7 +185,7 @@ class Router:
             route: The route to navigate to
         """
         if cls._instance and cls._instance._page:
-            cls._instance._page.go(route)
+            await cls._instance._page.push_route(route)
 
 async def enhanced_push_route(self, route, *args, **kwargs):
     if _pending_registrations and not Router._instance:
