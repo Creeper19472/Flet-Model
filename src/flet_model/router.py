@@ -116,7 +116,8 @@ class Router:
                 self._page.views.append(self._view_cache[part])
 
         # trigger Model.did_mount()
-        self._routes[route_parts[-1]].did_mount()
+        if route_parts[-1] in self._routes:
+            self._routes[route_parts[-1]].did_mount()
 
         self._page.update()
 
