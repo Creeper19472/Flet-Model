@@ -10,19 +10,18 @@ class Model:
     controls: Union[List[ft.Control], Callable[[], List[ft.Control]]] = []
     appbar: Optional[ft.AppBar] = None
     bottom_appbar: Optional[ft.BottomAppBar] = None
-    auto_scroll: Optional[bool] = None
+    auto_scroll: bool = False
     bgcolor: Optional[str] = None
     drawer: Optional[ft.NavigationDrawer] = None
     end_drawer: Optional[ft.NavigationDrawer] = None
-    fullscreen_dialog: Optional[bool] = None
     floating_action_button: Optional[ft.FloatingActionButton] = None
-    floating_action_button_location: Optional[str] = None
+    floating_action_button_location: Optional[ft.FloatingActionButtonLocation] = None
     navigation_bar: Optional[ft.NavigationBar] = None
     horizontal_alignment: ft.CrossAxisAlignment = ft.CrossAxisAlignment.START
-    on_scroll_interval: int = 10
+    scroll_interval: int = 10
     on_keyboard_event: Optional[Callable] = None
     padding: int = 10
-    scroll: Optional[bool] = None
+    scroll: Optional[ft.ScrollMode] = None
     on_scroll: Optional[Callable] = None
     spacing: int = 10
     vertical_alignment: ft.MainAxisAlignment = ft.MainAxisAlignment.START
@@ -65,8 +64,6 @@ class Model:
         # Efficient event binding
         if self.on_keyboard_event:
             self.page.on_keyboard_event = self.on_keyboard_event
-        if self.on_scroll:
-            self.page.on_scroll = self.on_scroll
 
         # Run init in thread
         self.page.run_thread(self.init)
@@ -96,11 +93,10 @@ class Model:
             bgcolor=self.bgcolor,
             drawer=self.drawer,
             end_drawer=self.end_drawer,
-            fullscreen_dialog=self.fullscreen_dialog,
             floating_action_button=self.floating_action_button,
             floating_action_button_location=self.floating_action_button_location,
             horizontal_alignment=self.horizontal_alignment,
-            on_scroll_interval=self.on_scroll_interval,
+            scroll_interval=self.scroll_interval,
             padding=self.padding,
             scroll=self.scroll,
             spacing=self.spacing,
@@ -125,11 +121,10 @@ class Model:
             'bgcolor': self.bgcolor,
             'drawer': self.drawer,
             'end_drawer': self.end_drawer,
-            'fullscreen_dialog': self.fullscreen_dialog,
             'floating_action_button': self.floating_action_button,
             'floating_action_button_location': self.floating_action_button_location,
             'horizontal_alignment': self.horizontal_alignment,
-            'on_scroll_interval': self.on_scroll_interval,
+            'on_scroll_interval': self.scroll_interval,
             'padding': self.padding,
             'scroll': self.scroll,
             'spacing': self.spacing,

@@ -187,17 +187,12 @@ class Router:
         if cls._instance and cls._instance._page:
             cls._instance._page.go(route)
 
-
-# Modify flet.Page to inject our router
-def enhanced_page_go(self, route, *args, **kwargs):
-    """Enhanced go method that ensures router is initialized before navigation"""
-    # Initialize router if there are pending routes
+async def enhanced_push_route(self, route, *args, **kwargs):
     if _pending_registrations and not Router._instance:
         Router.initialize(self)
-    # Call the original go method
-    original_go(self, route, *args, **kwargs)
-
+    # Call the original push_route method
+    await original_push_route(self, route, *args, **kwargs)
 
 # Store original method and apply patch
-original_go = ft.Page.go
-ft.Page.go = enhanced_page_go
+original_push_route = ft.Page.push_route
+ft.Page.push_route = enhanced_push_route
