@@ -134,7 +134,7 @@ class Model:
             'floating_action_button': self.floating_action_button,
             'floating_action_button_location': self.floating_action_button_location,
             'horizontal_alignment': self.horizontal_alignment,
-            'on_scroll_interval': self.scroll_interval,
+            'scroll_interval': self.scroll_interval,
             'padding': self.padding,
             'scroll': self.scroll,
             'spacing': self.spacing,
