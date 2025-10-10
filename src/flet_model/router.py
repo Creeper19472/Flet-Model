@@ -4,7 +4,7 @@ import flet as ft
 from .model import Model
 
 # Type variable for decorator return type annotation
-T = TypeVar('T', bound=Type[Model])
+T = TypeVar("T", bound=Type[Model])
 
 # Global storage for route registrations
 _pending_registrations: List[Tuple[str, Type[Model]]] = []
@@ -43,7 +43,7 @@ def route(route_path: str) -> Callable[[T], T]:
 class Router:
     """Router class for handling navigation in Flet applications."""
 
-    _instance: Optional['Router'] = None
+    _instance: Optional["Router"] = None
     _routes: Dict[str, Model] = {}
     _page: Optional[ft.Page] = None
     _view_cache: Dict[str, ft.View] = {}
@@ -72,15 +72,15 @@ class Router:
             self._initialized = True
 
     def _parse_route_and_hash(self, route: str) -> tuple[list[str], dict[str, dict]]:
-        parts = route.split('/')
+        parts = route.split("/")
         route_parts = []
         hash_data = {}
 
         for part in parts:
             if not part:
                 continue
-            if '#' in part:
-                route_part, hash_part = part.split('#', 1)
+            if "#" in part:
+                route_part, hash_part = part.split("#", 1)
                 route_parts.append(route_part)
                 # Parse hash data (e.g., "id=3" becomes {"id": "3"})
                 params = urllib.parse.parse_qs(hash_part)
@@ -99,9 +99,11 @@ class Router:
         self._page.on_view_pop = None
 
     def _handle_route_change(self, e: ft.RouteChangeEvent) -> None:
-        route_parts, hash_data = self._parse_route_and_hash(self._page.route.lstrip('/'))
+        route_parts, hash_data = self._parse_route_and_hash(
+            self._page.route.lstrip("/")
+        )
         self._page.views.clear()
-        current_route = ''
+        current_route = ""
 
         for part in route_parts:
             if part in self._routes:
@@ -115,11 +117,11 @@ class Router:
                     self._view_cache[part] = model.create_view()
                 self._page.views.append(self._view_cache[part])
 
+        self._page.update()
+
         # trigger Model.did_mount()
         if route_parts[-1] in self._routes:
             self._routes[route_parts[-1]].did_mount()
-
-        self._page.update()
 
     @classmethod
     def register_route(cls, route: str, model_class: Type[Model]) -> None:
@@ -136,7 +138,7 @@ class Router:
         if not (cls._instance and cls._instance._page and cls._instance._page.route):
             return None
 
-        current_route = cls._instance._page.route.split('/')[-1]
+        current_route = cls._instance._page.route.split("/")[-1]
         return cls._instance._routes.get(current_route)
 
     # Auto-initialize with the page when app starts
@@ -183,11 +185,13 @@ class Router:
         if cls._instance and cls._instance._page:
             await cls._instance._page.push_route(route)
 
+
 async def enhanced_push_route(self, route, *args, **kwargs):
     if _pending_registrations and not Router._instance:
         Router.initialize(self)
     # Call the original push_route method
     await original_push_route(self, route, *args, **kwargs)
+
 
 # Store original method and apply patch
 original_push_route = ft.Page.push_route
