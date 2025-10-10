@@ -96,7 +96,7 @@ class Router:
             return
 
         self._page.on_route_change = self._handle_route_change
-        self._page.on_view_pop = self._handle_view_pop
+        self._page.on_view_pop = None
 
     def _handle_route_change(self, e: ft.RouteChangeEvent) -> None:
         route_parts, hash_data = self._parse_route_and_hash(self._page.route.lstrip('/'))
@@ -119,16 +119,6 @@ class Router:
         if route_parts[-1] in self._routes:
             self._routes[route_parts[-1]].did_mount()
 
-        self._page.update()
-
-    async def _handle_view_pop(self, e: ft.ViewPopEvent) -> None:
-        if len(self._page.views) > 1:
-            route_parts = self._page.route.split('/')
-            self._routes[route_parts[-1]].will_unmount()
-            self._page.views.pop()
-            route_parts.pop()
-            await self._page.push_route('/'.join(route_parts))
-            
         self._page.update()
 
     @classmethod
