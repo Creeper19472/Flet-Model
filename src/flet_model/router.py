@@ -140,8 +140,9 @@ class Router:
             for model in cls._instance._routes.values():
                 model._control_cache.clear()
                 model.get_cached_controls.cache_clear()
+                model.__init__(cls._instance._page, cls._instance)
             cls._instance._view_cache.clear()
-
+            
     @classmethod
     def get_current_model(cls) -> Optional[Model]:
         """Get the model instance for the current route."""
