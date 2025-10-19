@@ -169,7 +169,7 @@ class Router:
 
         # Register any routes that were decorated
         for route_path, model_class in _pending_registrations:
-            model_instance = model_class(page)
+            model_instance = model_class(page, cls._instance)
             cls._instance._routes[route_path] = model_instance
 
         # Clear pending registrations
