@@ -139,6 +139,7 @@ class Router:
         if cls._instance:
             for model in cls._instance._routes.values():
                 model._control_cache.clear()
+                model.get_cached_controls.cache_clear()
             cls._instance._view_cache.clear()
 
     @classmethod
