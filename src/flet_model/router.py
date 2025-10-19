@@ -137,6 +137,8 @@ class Router:
     def clear_cache(cls) -> None:
         """Clear the view cache."""
         if cls._instance:
+            for model in cls._instance._routes.values():
+                model._control_cache.clear()
             cls._instance._view_cache.clear()
 
     @classmethod
