@@ -1,6 +1,10 @@
 from typing import List, Optional, Callable, Any, Union, Dict
+from typing import TYPE_CHECKING
 import flet as ft
 from functools import lru_cache
+
+if TYPE_CHECKING:
+    from .router import Router
 
 
 class Model:
@@ -30,9 +34,10 @@ class Model:
     # Class-level cache for event handlers
     _event_handler_cache: Dict[str, Callable] = {}
 
-    def __init__(self, page: ft.Page):
+    def __init__(self, page: ft.Page, router: "Router") -> None:
         """Initialize the model with a Flet page instance."""
         self.page = page
+        self._router = router
         self.view: Optional[ft.View] = None
         self._control_cache = {}
         self.route_data: Dict[str, Any] = {}

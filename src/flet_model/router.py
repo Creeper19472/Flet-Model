@@ -1,3 +1,4 @@
+from calendar import c
 from typing import Dict, Optional, Type, Any, Callable, TypeVar, List, Tuple
 import urllib.parse
 import flet as ft
@@ -127,10 +128,16 @@ class Router:
     def register_route(cls, route: str, model_class: Type[Model]) -> None:
         """Register a new route with its corresponding model class."""
         if cls._instance and cls._instance._page:
-            cls._instance._routes[route] = model_class(cls._instance._page)
+            cls._instance._routes[route] = model_class(cls._instance._page, cls._instance)
             # Clear view cache for this route
             if route in cls._instance._view_cache:
                 del cls._instance._view_cache[route]
+
+    @classmethod
+    def clear_cache(cls) -> None:
+        """Clear the view cache."""
+        if cls._instance:
+            cls._instance._view_cache.clear()
 
     @classmethod
     def get_current_model(cls) -> Optional[Model]:
