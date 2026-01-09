@@ -30,6 +30,7 @@ class Model:
     spacing: int = 10
     vertical_alignment: ft.MainAxisAlignment = ft.MainAxisAlignment.START
     overlay_controls: List[ft.Control] = []
+    decoration: Optional[ft.BoxDecoration] = None
 
     # Class-level cache for event handlers
     _event_handler_cache: Dict[str, Callable] = {}
@@ -118,6 +119,7 @@ class Model:
             vertical_alignment=self.vertical_alignment,
             navigation_bar=self.navigation_bar,
             on_scroll=self.on_scroll,
+            decoration=self.decoration,
         )
 
         self.page.run_thread(self.post_init)
