@@ -24,7 +24,7 @@ class Model:
     horizontal_alignment: ft.CrossAxisAlignment = ft.CrossAxisAlignment.START
     scroll_interval: int = 10
     on_keyboard_event: Optional[Callable] = None
-    padding: int = 10
+    padding: ft.PaddingValue = 10
     scroll: Optional[ft.ScrollMode] = None
     on_scroll: Optional[Callable] = None
     spacing: int = 10
