@@ -128,12 +128,15 @@ class Router:
         """Handle view pop events (back button)."""
 
         if e.view is not None:
+            print("View popped:", e.view)
             route_parts, hash_data = self._parse_route_and_hash(
                 self._page.route.lstrip("/")
             )
 
             self._page.views.remove(e.view)
-            await self._page.push_route("/" + "/".join(route_parts[:-1]))
+            target_route = "/" + "/".join(route_parts[:-1])
+            print("Navigating back to:", target_route)
+            await self._page.push_route(target_route)
 
     @classmethod
     def register_route(cls, route: str, model_class: Type[Model]) -> None:
