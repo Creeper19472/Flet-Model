@@ -126,17 +126,22 @@ class Router:
 
     async def _handle_view_popped(self, e: ft.ViewPopEvent):
         """Handle view pop events (back button)."""
-        
+
         if e.view is not None:
+            route_parts, hash_data = self._parse_route_and_hash(
+                self._page.route.lstrip("/")
+            )
+
             self._page.views.remove(e.view)
-            top_view = self._page.views[-1]
-            await self._page.push_route(top_view.route)
+            await self._page.push_route("/" + "/".join(route_parts[:-1]))
 
     @classmethod
     def register_route(cls, route: str, model_class: Type[Model]) -> None:
         """Register a new route with its corresponding model class."""
         if cls._instance and cls._instance._page:
-            cls._instance._routes[route] = model_class(cls._instance._page, cls._instance)
+            cls._instance._routes[route] = model_class(
+                cls._instance._page, cls._instance
+            )
             # Clear view cache for this route
             if route in cls._instance._view_cache:
                 del cls._instance._view_cache[route]
@@ -150,7 +155,7 @@ class Router:
                 model.get_cached_controls.cache_clear()
                 model.__init__(cls._instance._page, cls._instance)
             cls._instance._view_cache.clear()
-            
+
     @classmethod
     def get_current_model(cls) -> Optional[Model]:
         """Get the model instance for the current route."""
