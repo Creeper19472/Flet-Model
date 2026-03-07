@@ -126,6 +126,7 @@ class Router:
 
     async def _handle_view_popped(self, e: ft.ViewPopEvent):
         """Handle view pop events (back button)."""
+        print("View pop event:", e)
 
         if e.view is not None:
             print("View popped:", e.view)
