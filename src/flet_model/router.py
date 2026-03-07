@@ -97,7 +97,7 @@ class Router:
             return
 
         self._page.on_route_change = self._handle_route_change
-        self._page.on_view_pop = None
+        self._page.on_view_pop = self._handle_view_popped
 
     def _handle_route_change(self, e: ft.RouteChangeEvent) -> None:
         route_parts, hash_data = self._parse_route_and_hash(
@@ -123,6 +123,14 @@ class Router:
         # trigger Model.did_mount()
         if route_parts[-1] in self._routes:
             self._routes[route_parts[-1]].did_mount()
+
+    async def _handle_view_popped(self, e: ft.ViewPopEvent):
+        """Handle view pop events (back button)."""
+        
+        if e.view is not None:
+            self._page.views.remove(e.view)
+            top_view = self._page.views[-1]
+            await self._page.push_route(top_view.route)
 
     @classmethod
     def register_route(cls, route: str, model_class: Type[Model]) -> None:
