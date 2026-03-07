@@ -1,5 +1,4 @@
-from calendar import c
-from typing import Dict, Optional, Type, Any, Callable, TypeVar, List, Tuple
+from typing import Dict, Optional, Type, Callable, TypeVar, List, Tuple
 import urllib.parse
 import flet as ft
 from .model import Model
