@@ -16,6 +16,7 @@ class Model:
     bottom_appbar: Optional[ft.BottomAppBar] = None
     auto_scroll: bool = False
     bgcolor: Optional[str] = None
+    can_pop: bool = True
     drawer: Optional[ft.NavigationDrawer] = None
     end_drawer: Optional[ft.NavigationDrawer] = None
     floating_action_button: Optional[ft.FloatingActionButton] = None
@@ -120,6 +121,7 @@ class Model:
             navigation_bar=self.navigation_bar,
             on_scroll=self.on_scroll,
             decoration=self.decoration,
+            can_pop=self.can_pop,
         )
 
         self.page.run_thread(self.post_init)
@@ -147,6 +149,9 @@ class Model:
             'spacing': self.spacing,
             'vertical_alignment': self.vertical_alignment,
             'navigation_bar': self.navigation_bar,
+            'on_scroll': self.on_scroll,
+            'decoration': self.decoration,
+            'can_pop': self.can_pop,
         }
 
         for attr, value in updates.items():
