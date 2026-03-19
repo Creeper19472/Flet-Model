@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "flet-model"
-version = "0.1.17"
+version = "0.1.15"
 description = "A Model-based router for Flet applications that simplifies the creation of multi-page applications"
 readme = "README.md"
 authors = [{ name = "Creeper19472", email = "creeper19472@crpteam.club" }]
@@ -25,9 +25,9 @@ classifiers = [
 ]
 keywords = ["flet", "router", "model", "navigation", "gui", "mvc", "ui", "framework"]
 dependencies = [
-    "flet>=0.80.0",
+    "flet>=0.70.0.dev6196",
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 
 [project.optional-dependencies]
 dev = [
@@ -52,7 +52,7 @@ Changelog = "https://github.com/Creeper19472/Flet-Model/releases"
 
 [tool.black]
 line-length = 88
-target-version = ['py314']
+target-version = ['py310']
 include = '\.pyi?$'
 extend-exclude = '''
 # A regex preceded with ^/ will apply only to files and directories
