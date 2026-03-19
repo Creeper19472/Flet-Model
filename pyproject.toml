@@ -25,7 +25,7 @@ classifiers = [
 ]
 keywords = ["flet", "router", "model", "navigation", "gui", "mvc", "ui", "framework"]
 dependencies = [
-    "flet>=0.82.3.dev7890",
+    "flet>=0.82.2",
 ]
 requires-python = ">=3.12"
 
